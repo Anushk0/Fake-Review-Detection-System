@@ -1,0 +1,34 @@
+{
+  "labels": {
+    "0": "Computer-generated (CG)",
+    "1": "Original (OR, human-written)"
+  },
+  "stage_a": {
+    "score": "P(Original): logistic regression predict_proba[:, 1], averaged with the BiLSTM sigmoid output when the BiLSTM is available",
+    "rule": "flag as computer-generated if score < threshold",
+    "threshold": 0.26,
+    "calibrated_for": {
+      "model_pipeline.joblib": "b46f1077d8d12e403a3d9099974f20f917c3d8a0d56011ad227f32d2559d780e",
+      "dl_model.keras": "efe8bddad08eb51058e3789684fa719eafbcf47ee01cf0b35e492d919e8689ee"
+    },
+    "target_false_positive_rate": 0.01,
+    "chosen_on": "validation split (genuine reviews)"
+  },
+  "stage_b": {
+    "score": "softmax probability of output index 0 (machine-generated, MAGE convention) from the detector",
+    "rule": "flag as computer-generated if score >= threshold",
+    "threshold": 0.998217523097992,
+    "calibrated_for": {
+      "detector": "nealcly/detection-longformer",
+      "revision": "61d3aab2e0e5afcce6cb00b92661b0f9ee18ac2b",
+      "preprocess": true,
+      "max_tokens": 4096
+    },
+    "mode": "mage",
+    "detector": "nealcly/detection-longformer",
+    "revision": "61d3aab2e0e5afcce6cb00b92661b0f9ee18ac2b",
+    "target_false_positive_rate": 0.01,
+    "chosen_on": "pooled validation human reviews (n=450): flag at most 1%"
+  },
+  "fusion": "computer-generated if Stage A flags OR Stage B flags"
+}

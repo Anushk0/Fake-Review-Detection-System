@@ -1,0 +1,175 @@
+{
+  "model": "tfidf + stats features -> LogisticRegression",
+  "feature_groups": [
+    "tfidf",
+    "stats"
+  ],
+  "C": 10,
+  "n_train": 32336,
+  "n_test": 8084,
+  "test": {
+    "accuracy": 0.9537,
+    "precision": 0.9473,
+    "recall": 0.9609,
+    "f1": 0.9541
+  },
+  "test_by_source": {
+    "all": {
+      "n": 8084,
+      "accuracy": 0.9537,
+      "precision": 0.9473,
+      "recall": 0.9609,
+      "f1": 0.9541
+    },
+    "amazon": {
+      "n": 8084,
+      "accuracy": 0.9537,
+      "precision": 0.9473,
+      "recall": 0.9609,
+      "f1": 0.9541
+    }
+  },
+  "data": {
+    "train": {
+      "amazon": 32336
+    },
+    "test": {
+      "amazon": 8084
+    }
+  },
+  "ablation_test_accuracy": {
+    "tfidf_only": {
+      "C": 10,
+      "val_accuracy": 0.9485,
+      "test_accuracy": 0.9487
+    },
+    "tfidf+stats": {
+      "C": 10,
+      "val_accuracy": 0.9555,
+      "test_accuracy": 0.9499
+    },
+    "tfidf+similarity": {
+      "C": 10,
+      "val_accuracy": 0.9483,
+      "test_accuracy": 0.9462
+    },
+    "all": {
+      "C": 10,
+      "val_accuracy": 0.9553,
+      "test_accuracy": 0.9495
+    },
+    "stats+similarity_only": {
+      "C": 0.3,
+      "val_accuracy": 0.8629,
+      "test_accuracy": 0.8605
+    }
+  },
+  "labels": {
+    "0": "Computer-generated (CG)",
+    "1": "Original (OR)"
+  },
+  "deep_learning": {
+    "model": "TextVectorization(20000 words, 200 tokens) -> Embedding(64) -> BiLSTM(64) -> Dense(32) -> sigmoid",
+    "epochs_trained": 3,
+    "best_val_accuracy": 0.9516,
+    "test": {
+      "n": 8084,
+      "accuracy": 0.9576,
+      "precision": 0.9593,
+      "recall": 0.9557,
+      "f1": 0.9575
+    },
+    "test_by_source": {
+      "all": {
+        "n": 8084,
+        "accuracy": 0.9576,
+        "precision": 0.9593,
+        "recall": 0.9557,
+        "f1": 0.9575
+      },
+      "amazon": {
+        "n": 8084,
+        "accuracy": 0.9576,
+        "precision": 0.9593,
+        "recall": 0.9557,
+        "f1": 0.9575
+      }
+    }
+  },
+  "ensemble": {
+    "model": "mean of LogisticRegression pipeline and BiLSTM probabilities",
+    "test": {
+      "n": 8084,
+      "accuracy": 0.9646,
+      "precision": 0.9633,
+      "recall": 0.9661,
+      "f1": 0.9647
+    },
+    "test_by_source": {
+      "all": {
+        "n": 8084,
+        "accuracy": 0.9646,
+        "precision": 0.9633,
+        "recall": 0.9661,
+        "f1": 0.9647
+      },
+      "amazon": {
+        "n": 8084,
+        "accuracy": 0.9646,
+        "precision": 0.9633,
+        "recall": 0.9661,
+        "f1": 0.9647
+      }
+    }
+  },
+  "threshold": {
+    "value": 0.26,
+    "goal": "flag at most 1% of genuine reviews as computer-generated",
+    "chosen_on": "validation split",
+    "validation": {
+      "genuine_flagged": 0.0099,
+      "computer_generated_caught": 0.8973,
+      "accuracy": 0.9437
+    },
+    "test": {
+      "genuine_flagged": 0.0096,
+      "computer_generated_caught": 0.9092,
+      "accuracy": 0.9498
+    },
+    "test_at_0.5": {
+      "genuine_flagged": 0.0339,
+      "computer_generated_caught": 0.9631,
+      "accuracy": 0.9646
+    },
+    "breakdown": {
+      "amazon": {
+        "chosen": {
+          "n": 8084,
+          "genuine_flagged": 0.0096,
+          "computer_generated_caught": 0.9092,
+          "accuracy": 0.9498
+        },
+        "at_0.5": {
+          "n": 8084,
+          "genuine_flagged": 0.0339,
+          "computer_generated_caught": 0.9631,
+          "accuracy": 0.9646
+        }
+      },
+      "unseen_gpt4_imdb": {
+        "chosen": {
+          "n": 400,
+          "genuine_flagged": 0.0,
+          "computer_generated_caught": 0.0,
+          "accuracy": 0.5
+        },
+        "at_0.5": {
+          "n": 400,
+          "genuine_flagged": 0.005,
+          "computer_generated_caught": 0.0,
+          "accuracy": 0.4975
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,8 @@
+# Optional: enables the modern-AI check (detects text from ChatGPT, GPT-4, LLaMA and similar).
+# Install after requirements.txt:   pip install -r requirements-modern.txt
+# About 1 GB including the detector model, which downloads automatically on first use.
+# PyPI's PyTorch wheels for Windows and macOS are CPU-only. On Linux, install the smaller CPU build first:
+#   pip install torch --index-url https://download.pytorch.org/whl/cpu
+torch==2.14.1
+transformers==5.20.2
+clean-text==0.7.1   # only for the MAGE reference preprocessing (modern_detector.py mode "mage")

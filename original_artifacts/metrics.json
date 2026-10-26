@@ -1,0 +1,172 @@
+{
+  "model": "TF-IDF (1-2 grams) + style/sentiment/repetition stats + corpus similarity -> LogisticRegression",
+  "C": 10,
+  "n_train": 32336,
+  "n_test": 8084,
+  "test": {
+    "accuracy": 0.952,
+    "precision": 0.9469,
+    "recall": 0.9577,
+    "f1": 0.9523
+  },
+  "ablation_test_accuracy": {
+    "tfidf_only": {
+      "C": 10,
+      "val_accuracy": 0.9485,
+      "test_accuracy": 0.9487
+    },
+    "tfidf+stats": {
+      "C": 10,
+      "val_accuracy": 0.9555,
+      "test_accuracy": 0.95
+    },
+    "tfidf+similarity": {
+      "C": 10,
+      "val_accuracy": 0.9483,
+      "test_accuracy": 0.9461
+    },
+    "all": {
+      "C": 10,
+      "val_accuracy": 0.9555,
+      "test_accuracy": 0.9494
+    },
+    "stats+similarity_only": {
+      "C": 0.3,
+      "val_accuracy": 0.8629,
+      "test_accuracy": 0.8606
+    }
+  },
+  "labels": {
+    "0": "Computer-generated (CG)",
+    "1": "Original (OR)"
+  },
+  "deep_learning": {
+    "model": "TextVectorization(20000 words, 200 tokens) -> Embedding(64) -> BiLSTM(64) -> Dense(32) -> sigmoid",
+    "epochs_trained": 3,
+    "best_val_accuracy": 0.9516,
+    "test": {
+      "accuracy": 0.9547,
+      "precision": 0.9607,
+      "recall": 0.9483,
+      "f1": 0.9544
+    }
+  },
+  "ensemble": {
+    "model": "mean of LogisticRegression pipeline and BiLSTM probabilities",
+    "test": {
+      "accuracy": 0.9657,
+      "precision": 0.9668,
+      "recall": 0.9646,
+      "f1": 0.9657
+    }
+  },
+  "threshold": {
+    "value": 0.22,
+    "goal": "flag at most 1% of genuine reviews as computer-generated",
+    "chosen_on": "validation split",
+    "validation": {
+      "genuine_flagged": 0.0095,
+      "computer_generated_caught": 0.9019,
+      "accuracy": 0.9462
+    },
+    "test": {
+      "genuine_flagged": 0.0099,
+      "computer_generated_caught": 0.9037,
+      "accuracy": 0.9469
+    },
+    "test_at_0.5": {
+      "genuine_flagged": 0.0354,
+      "computer_generated_caught": 0.9668,
+      "accuracy": 0.9657
+    },
+    "breakdown": {
+      "amazon": {
+        "chosen": {
+          "n": 8084,
+          "genuine_flagged": 0.0099,
+          "computer_generated_caught": 0.9037,
+          "accuracy": 0.9469
+        },
+        "at_0.5": {
+          "n": 8084,
+          "genuine_flagged": 0.0354,
+          "computer_generated_caught": 0.9668,
+          "accuracy": 0.9657
+        }
+      },
+      "unseen_gpt4_imdb": {
+        "chosen": {
+          "n": 400,
+          "genuine_flagged": 0.0,
+          "computer_generated_caught": 0.0,
+          "accuracy": 0.5
+        },
+        "at_0.5": {
+          "n": 400,
+          "genuine_flagged": 0.005,
+          "computer_generated_caught": 0.0,
+          "accuracy": 0.4975
+        }
+      }
+    }
+  },
+  "modern_ai": {
+    "detector": "nealcly/detection-longformer",
+    "threshold": 0.9964,
+    "classic_threshold": 0.22,
+    "rule": "computer-generated if the ensemble's probability of Original < classic_threshold OR the modern detector's probability of AI >= threshold",
+    "chosen_on": "validation human reviews (n=450): flag at most 1%",
+    "validation_humans_flagged": 0.0089,
+    "test": {
+      "amazon_gpt2_ai": {
+        "n": 150,
+        "kind": "computer-generated",
+        "flagged_by_classic": 0.9133,
+        "flagged_by_modern": 0.4467,
+        "flagged_combined": 0.94
+      },
+      "amazon_human": {
+        "n": 300,
+        "kind": "genuine",
+        "flagged_by_classic": 0.0033,
+        "flagged_by_modern": 0.02,
+        "flagged_combined": 0.0233
+      },
+      "imdb_gpt4_ai": {
+        "n": 200,
+        "kind": "computer-generated",
+        "flagged_by_classic": 0.0,
+        "flagged_by_modern": 0.965,
+        "flagged_combined": 0.965
+      },
+      "imdb_human": {
+        "n": 200,
+        "kind": "genuine",
+        "flagged_by_classic": 0.0,
+        "flagged_by_modern": 0.015,
+        "flagged_combined": 0.015
+      },
+      "yelp_ai_chatgpt": {
+        "n": 99,
+        "kind": "computer-generated",
+        "flagged_by_classic": 0.0,
+        "flagged_by_modern": 0.7879,
+        "flagged_combined": 0.7879
+      },
+      "yelp_ai_other": {
+        "n": 100,
+        "kind": "computer-generated",
+        "flagged_by_classic": 0.01,
+        "flagged_by_modern": 0.63,
+        "flagged_combined": 0.63
+      },
+      "yelp_human": {
+        "n": 150,
+        "kind": "genuine",
+        "flagged_by_classic": 0.0,
+        "flagged_by_modern": 0.0,
+        "flagged_combined": 0.0
+      }
+    }
+  }
+}

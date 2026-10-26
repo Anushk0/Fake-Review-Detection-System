@@ -14,21 +14,6 @@ Welcome to the comprehensive documentation for our Fake Review Detection project
 
 ---
 
-## Table of Contents
-
-1. [Project Overview](#project-overview)
-2. [Data Collection & Preprocessing](#data-collection--preprocessing)
-3. [Feature Engineering & Embeddings](#feature-engineering--embeddings)
-4. [Modeling Approaches](#modeling-approaches)
-   - [Traditional Machine Learning Models](#traditional-machine-learning-models)
-   - [Deep Learning Models](#deep-learning-models)
-5. [Experiment Tracking with MLflow](#experiment-tracking-with-mlflow)
-6. [Running the App](#running-the-app)
-7. [Docker Image](#docker-image)
-8. [Conclusion](#conclusion)
-
----
-
 ## Project Overview
 
 Fake reviews are a growing problem in the online ecosystem, impacting consumer trust and business reputations. Our project aims to automatically detect and flag these computer-generated reviews by analyzing textual content. To achieve this, we have employed various techniques including:
@@ -98,8 +83,6 @@ Our experiments are fully tracked using MLflow. For every run, we log:
 - **Artifacts:** Confusion matrices (as PNG images) and model artifacts.
 - **Datasets:** Using the `mlflow.data` API, our dataset information is logged and appears under the MLflow UI's "Datasets" tab (for MLflow ≥ 2.4). When unavailable, the CSV files are logged as artifacts.
 
-You can view all our experiments on Dagshub through MLflow here:  
-[View MLflow Experiments on Dagshub](https://dagshub.com/<your-dagshub-username>/<your-repo>.mlflow/)
 
 A progress log (`progress_log.csv`) is maintained to ensure experiments are not re-run unnecessarily.
 
@@ -246,7 +229,7 @@ We provide a Docker image for easy deployment of the project. The image includes
 Your application will then be accessible at http://localhost:8501.
 
 For more details, refer to our Docker Hub repository:
-Docker Hub: [<your-dockerhub-username>/fake_review_detection](https://hub.docker.com/repository/docker/<your-dockerhub-username>/fake_review_detection/general)
+
 
 ## Conclusion
 
@@ -257,6 +240,5 @@ Our project integrates advanced NLP techniques, comprehensive feature engineerin
 ## Contributors
 
 Revised version (audit, corrected training pipeline, tests and revised paper):
-- Anushk Agrawal
+- Anushk Agrawal, Abhijay Krishnan, Bhoomi Airen
 
-Copyright notices are in [LICENSE](LICENSE).
